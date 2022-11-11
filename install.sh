@@ -136,12 +136,13 @@ install_x-ui() {
     last_version=$(curl -Ls "https://api.github.com/repos/ilia-mh/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 
     tar zxvf x-ui-${last_version}.tar.gz
+    mv x-ui-${last_version} x-ui
     rm x-ui-${last_version}.tar.gz -f
-    cd x-ui-${last_version}
+    cd x-ui
     chmod +x x-ui bin/xray-linux-${arch}
     cp -f x-ui.service /etc/systemd/system/
     wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/ilia-mh/x-ui/main/x-ui.sh
-    chmod +x /usr/local/x-ui-${last_version}/x-ui.sh
+    chmod +x /usr/local/x-ui/x-ui.sh
     chmod +x /usr/bin/x-ui
     config_after_install
     #echo -e "如果是全新安装，默认网页端口为 ${green}54321${plain}，用户名和密码默认都是 ${green}admin${plain}"
