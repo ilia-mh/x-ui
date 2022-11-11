@@ -107,22 +107,22 @@ install_x-ui() {
     cd /usr/local/
 
     if [ $# == 0 ]; then
-        last_version=$(curl -Ls "https://api.github.com/repos/ilia-mh/x-ui-vpn/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        last_version=$(curl -Ls "https://api.github.com/repos/ilia-mh/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$last_version" ]]; then
             echo -e "${red}detect x-ui Version failed, possibly out of Github API limit, please try again later, or specify manually x-ui Version installation ${plain}"
             exit 1
         fi
-        echo -e "detected x-ui The latest version of：${last_version}, start installation" https://github.com/ilia-mh/x-ui-vpn/archive/refs/tags/${last_version}.tar.gz
-        wget -N --no-check-certificate -O /usr/local/x-ui-vpn-${last_version}.tar.gz https://github.com/ilia-mh/x-ui-vpn/archive/refs/tags/${last_version}.tar.gz
+        echo -e "detected x-ui The latest version of：${last_version}, start installation" https://github.com/ilia-mh/x-ui/archive/refs/tags/${last_version}.tar.gz
+        wget -N --no-check-certificate -O /usr/local/x-ui-${last_version}.tar.gz https://github.com/ilia-mh/x-ui/archive/refs/tags/${last_version}.tar.gz
         if [[ $? -ne 0 ]]; then
             echo -e "${red}download x-ui Failed, please make sure your server is able to download Github document ${plain}"
             exit 1
         fi
     else
-        last_version=$(curl -Ls "https://api.github.com/repos/ilia-mh/x-ui-vpn/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-        url="https://github.com/ilia-mh/x-ui-vpn/archive/refs/tags/${last_version}.tar.gz"
+        last_version=$(curl -Ls "https://api.github.com/repos/ilia-mh/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        url="https://github.com/ilia-mh/x-ui/archive/refs/tags/${last_version}.tar.gz"
         echo -e "start installation x-ui v$1"
-        wget -N --no-check-certificate -O /usr/local/x-ui-vpn-${last_version}.tar.gz ${url}
+        wget -N --no-check-certificate -O /usr/local/x-ui-${last_version}.tar.gz ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}download x-ui v$1 failed, make sure this version exists ${plain}"
             exit 1
@@ -133,14 +133,16 @@ install_x-ui() {
         rm /usr/local/x-ui/ -rf
     fi
 
-    tar zxvf x-ui-linux-${arch}.tar.gz
-    rm x-ui-linux-${arch}.tar.gz -f
-    cd x-ui-vpn-${last_version}
+    last_version=$(curl -Ls "https://api.github.com/repos/ilia-mh/x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+
+    tar zxvf x-ui-${last_version}.tar.gz
+    rm x-ui-${last_version}.tar.gz -f
+    cd x-ui-${last_version}
     chmod +x x-ui bin/xray-linux-${arch}
     cp -f x-ui.service /etc/systemd/system/
-    wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/ilia-mh/x-ui-vpn/main/x-ui.sh
-    chmod +x /usr/local/x-ui/x-ui.sh
-    chmod +x /usr/bin/x-ui
+    wget --no-check-certificate -O /usr/bin/x-ui https://raw.githubusercontent.com/ilia-mh/x-ui/main/x-ui.sh
+    chmod +x /usr/local/x-ui-${last_version}/x-ui.sh
+    chmod +x /usr/bin/x-ui-${last_version}
     config_after_install
     #echo -e "如果是全新安装，默认网页端口为 ${green}54321${plain}，用户名和密码默认都是 ${green}admin${plain}"
     #echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保 54321 端口已放行${plain}"

@@ -94,7 +94,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls https://raw.githubusercontent.com/ilia-mh/x-ui-vpn/main/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/ilia-mh/x-ui/main/install.sh)
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
@@ -113,7 +113,7 @@ update() {
         fi
         return 0
     fi
-    bash <(curl -Ls https://raw.githubusercontent.com/ilia-mh/x-ui-vpn/main/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/ilia-mh/x-ui/main/install.sh)
     if [[ $? == 0 ]]; then
         LOGI "The update is complete, the panel has been automatically restarted"
         exit 0
@@ -303,7 +303,7 @@ install_bbr() {
 
 update_shell() {
     
-    wget -O /usr/bin/x-ui -N --no-check-certificate https://raw.githubusercontent.com/ilia-mh/x-ui-vpn/main/x-ui.sh
+    wget -O /usr/bin/x-ui -N --no-check-certificate https://raw.githubusercontent.com/ilia-mh/x-ui/main/x-ui.sh
     if [[ $? != 0 ]]; then
         echo ""
         LOGE "The download script failed, please check whether the machine can be connected Github"
