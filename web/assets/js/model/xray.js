@@ -496,16 +496,17 @@ TlsStreamSettings.Cert = class extends XrayCommonClass {
 };
 
 class StreamSettings extends XrayCommonClass {
-    constructor(network='tcp',
-                security='none',
-                tlsSettings=new TlsStreamSettings(),
-                tcpSettings=new TcpStreamSettings(),
-                kcpSettings=new KcpStreamSettings(),
-                wsSettings=new WsStreamSettings(),
-                httpSettings=new HttpStreamSettings(),
-                quicSettings=new QuicStreamSettings(),
-                grpcSettings=new GrpcStreamSettings(),
-                ) {
+    constructor(
+        network='tcp',
+        security='none',
+        tlsSettings=new TlsStreamSettings(),
+        tcpSettings=new TcpStreamSettings(),
+        kcpSettings=new KcpStreamSettings(),
+        wsSettings=new WsStreamSettings(),
+        httpSettings=new HttpStreamSettings(),
+        quicSettings=new QuicStreamSettings(),
+        grpcSettings=new GrpcStreamSettings(),
+    ) {
         super();
         this.network = network;
         this.security = security;
@@ -942,7 +943,7 @@ class Inbound extends XrayCommonClass {
             path: path,
             tls: this.stream.security,
         };
-        return 'vmess://' + base64(JSON.stringify(obj, null, 2));
+        return 'vmess://' + JSON.stringify(obj, null, 2);
     }
 
     genVLESSLink(address = '', remark='') {
