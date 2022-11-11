@@ -943,7 +943,9 @@ class Inbound extends XrayCommonClass {
             path: path,
             tls: this.stream.security,
         };
-        return 'vmess://' + JSON.stringify(obj, null, 2);
+
+        console.log('The Vmess Link Object:',obj)
+        return 'vmess://' + JSON.stringify(obj);
     }
 
     genVLESSLink(address = '', remark='') {
